@@ -1,0 +1,61 @@
+mi ruta de mi proyecto actual es:
+C:\Users\sdsst.desarrollador6\Documents\GitHub\RED-DE-PATAS\src\main\java\pe\gob\msi\apiRedDePatas
+
+
+
+Estructura del Proyecto (Tree View)
+src/main/java/pe/gob/sanisidro/entrepatas
+│
+├── EntrePatasApplication.java        // Clase Main
+│
+├── config/                           // Configuraciones Globales
+│   ├── OpenApiConfig.java            // Swagger/SpringDoc
+│   ├── DatabaseConfig.java           // Config Oracle específica
+│   └── CorsConfig.java
+│
+├── security/                         // EL NÚCLEO DE SEGURIDAD (Spring Security 6/7)
+│   ├── config/
+│   │   └── SecurityConfig.java       // SecurityFilterChain (Public vs Protected)
+│   ├── jwt/
+│   │   ├── JwtTokenProvider.java     // Generación/Validación de Tokens
+│   │   └── JwtAuthFilter.java        // Filtro para cada petición
+│   └── user/
+│       ├── CustomUserDetailsService.java // Carga usuario desde DB (RDP_USUARIO)
+│       └── SecurityUser.java         // Implementación de UserDetails
+│
+├── shared/                           // UTILIDADES COMPARTIDAS (Kernel)
+│   ├── exception/                    // GlobalExceptionHandler
+│   ├── util/                         // TimeUtils, StringUtils
+│   └── persistence/                  // Clases base para Entidades (Audit)
+│       └── BaseAuditEntity.java      // Mapeo de FECREGISTRO, USUREG, etc.
+│
+└── features/                         // MÓDULOS DE NEGOCIO (Separation of Concerns)
+    │
+    ├── auth/                         // Módulo de Autenticación (Login)
+    │   ├── api/                      // Controllers (Auth, Register)
+    │   ├── dto/                      // LoginRequest, TokenResponse (Java Records)
+    │   └── service/                  // AuthService (Lógica de login)
+    │
+    ├── administracion/                        // Módulo Municipalidad (Roles Admin)
+    │   ├── api/
+    │   ├── service/
+    │   ├── repository/
+    │   ├── entity/                   // RDP_CERTIFICACION, etc.
+    │   └── dto/
+    │
+    ├── paseador/                       // Módulo Paseador
+    │   ├── api/                      // WalkerController (Panic Button, Requests)
+    │   ├── service/                  // WalkerService
+    │   ├── repository/               // Repositorio JPA
+    │   ├── entity/                   // RDP_PASEADORCERT, etc.
+    │   └── dto/
+    │
+    └── ciudadano/                      // Módulo Ciudadano
+        ├── api/                      // CitizenController (Pets, Booking)
+        ├── service/
+        ├── repository/               // RDP_MASCOTA Repository
+        ├── entity/                   // RDP_MASCOTA
+        └── dto/
+
+---------------------------------------------------------------
+

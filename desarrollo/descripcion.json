@@ -1,0 +1,140 @@
+{
+  "project_metadata": {
+    "name": "EntrePatas (Red de Patas)",
+    "owner": "Municipalidad de San Isidro",
+    "description": "Sistema de gestión de paseos de perros que conecta a ciudadanos con paseadores certificados, priorizando la seguridad ciudadana.",
+    "context": "El sistema gestiona paseadores, validaciones y alertas de seguridad. La lógica de negocio reside principalmente en la Base de Datos (Oracle) para garantizar integridad y rendimiento.",
+    "location_scope": "Distrito de San Isidro, Lima"
+  },
+  "technical_stack": {
+    "language": "Java 25 (LTS) - Features: Records, Virtual Threads",
+    "framework": "Spring Boot 4.0.1",
+    "database": "Oracle 12c",
+    "schema_name": "MSIRDP",
+    "data_access_strategy": "STRICTLY NO ORM (No Hibernate/JPA). Native JDBC (JdbcTemplate) only.",
+    "logic_placement": "Database-Centric. All CRUD and Business Logic must be encapsulated in Oracle Packages (PKG_), Procedures (PRC_) and Functions (FNC_).",
+    "naming_convention": "Estándar Municipalidad San Isidro V3.1 (Prefijos: RDP_, PKG_, PRC_, FNC_, NUM, TXT, FEC, FLG, EST)",
+    "security": "Spring Security 6 + JWT (Stateless). Authentication validated via DB Procedure."
+  },
+  "architecture_rules": {
+    "backend_role": "API Orchestrator. Java receives requests and calls Stored Procedures.",
+    "forbidden_libraries": ["spring-boot-starter-data-jpa", "hibernate-core"],
+    "allowed_libraries": ["spring-boot-starter-jdbc", "spring-boot-starter-security", "spring-boot-starter-web", "lombok"],
+    "package_structure": "Package by Feature (auth, admin, walker, citizen). Each feature calls specific DB Packages."
+  },
+  "user_roles": [
+    {
+      "role_id": 1,
+      "name": "ADMINISTRADOR",
+      "description": "Gestor municipal."
+    },
+    {
+      "role_id": 2,
+      "name": "PASEADOR",
+      "description": "Proveedor de servicio con App Móvil."
+    },
+    {
+      "role_id": 3,
+      "name": "CIUDADANO",
+      "description": "Cliente/Dueño de mascota."
+    }
+  ],
+  "functional_requirements": {
+    "auth_module": [
+      "Login: Java llama a PKG_AUTH.PRC_LOGIN.",
+      "Gestión de estados: Java llama a PKG_USUARIO.PRC_CAMBIARESTADO."
+    ],
+    "admin_module": [
+      "RF-ADM-01: Gestión Paseadores -> PKG_ADMIN_PASEADOR (CRUD via Procedures).",
+      "RF-ADM-03: Gestión Certificaciones -> PKG_ADMIN_CERT (CRUD via Procedures)."
+    ],
+    "walker_module": [
+      "RF-PAS-03: Bandeja Solicitudes -> Cursor de salida de PKG_PASEADOR.PRC_LISTAR_SOLICITUDES.",
+      "RF-PAS-05: Botón Pánico -> PKG_ALERTA.PRC_REGISTRAR_ALERTA."
+    ],
+    "citizen_module": [
+      "RF-CIU-01: Registro -> PKG_CIUDADANO.PRC_REGISTRAR.",
+      "RF-CIU-04: Solicitud Paseo -> PKG_SOLICITUD.PRC_CREAR (Manejo transaccional en DB)."
+    ]
+  },
+  "database_schema": {
+    "tables": [
+      {
+        "name": "RDP_ROL",
+        "pk": "NUMROL",
+        "columns": ["NUMROL", "TXTNOMBRE", "TXTDESCRIPCION", "FECREGISTRO", "TXTUSUREG"]
+      },
+      {
+        "name": "RDP_PERSONA",
+        "pk": "NUMPERSONA",
+        "unique": ["CODDNI"],
+        "columns": ["NUMPERSONA", "CODDNI", "TXTNOMBRES", "TXTAPELLIDOS", "TXTTELEFONO", "TXTDIRECCION", "TXTFOTOPERFIL", "TXTBIOS", "FLGACTIVO"]
+      },
+      {
+        "name": "RDP_USUARIO",
+        "pk": "NUMUSUARIO",
+        "unique": ["TXTCORREO"],
+        "columns": ["NUMUSUARIO", "NUMPERSONA", "NUMROL", "TXTCORREO", "TXTCLAVE", "ESTUSUARIO", "FLGDISPONIBLE"]
+      },
+      {
+        "name": "RDP_MASCOTA",
+        "pk": "NUMMASCOTA",
+        "columns": ["NUMMASCOTA", "NUMPERSONA", "TXTNOMBRE", "TXTRAZA", "FECNACIMIENTO", "TXTFOTO", "TXTNOTAS", "TXTALERGIAS", "FLGACTIVO"]
+      },
+      {
+        "name": "RDP_CERTIFICACION",
+        "pk": "NUMCERTIF",
+        "columns": ["NUMCERTIF", "TXTNOMBRE", "TXTDESCRIPCION", "TXTICONO", "FLGACTIVO"]
+      },
+      {
+        "name": "RDP_PASEADORCERT",
+        "pk": "NUMASIGNACION",
+        "columns": ["NUMASIGNACION", "NUMPERSONA", "NUMCERTIF", "FECOBTENCION", "TXTVALIDADOPOR", "FLGACTIVO"]
+      },
+      {
+        "name": "RDP_ESTADOSOLICITUD",
+        "pk": "NUMESTADO",
+        "columns": ["NUMESTADO", "TXTNOMBRE", "TXTSIGLA", "FLGACTIVO"]
+      },
+      {
+        "name": "RDP_SOLICITUDPASEO",
+        "pk": "NUMSOLICITUD",
+        "columns": ["NUMSOLICITUD", "NUMCIUDADANO", "NUMPASEADOR", "NUMESTADO", "FECSOLICITUD", "FECPROGRAMADA", "TXTHORAINICIO", "NUMDURACION", "TXTDIRECCION", "NUMCOSTO"]
+      },
+      {
+        "name": "RDP_SOLICITUDPASEODET",
+        "pk": "NUMDETALLE",
+        "columns": ["NUMDETALLE", "NUMSOLICITUD", "NUMMASCOTA"]
+      },
+      {
+        "name": "RDP_CALIFICACION",
+        "pk": "NUMCALIFICACION",
+        "columns": ["NUMCALIFICACION", "NUMSOLICITUD", "NUMPUNTUACION", "TXTCOMENTARIO", "FECCALIFICACION", "TXTCALIFICADOPOR"]
+      },
+      {
+        "name": "RDP_ALERTA",
+        "pk": "NUMALERTA",
+        "columns": ["NUMALERTA", "NUMPASEADOR", "FECALERTA", "NUMLATITUD", "NUMLONGITUD", "ESTATENCION"]
+      }
+    ],
+    "sequences": [
+      "SEQ_ROL", "SEQ_PERSONA", "SEQ_USUARIO", "SEQ_MASCOTA", "SEQ_CERTIFICACION",
+      "SEQ_PASEADORCERT", "SEQ_SOLICITUD", "SEQ_SOLICITUDDET", "SEQ_CALIFICACION",
+      "SEQ_ALERTA", "SEQ_ESTADOSOLICITUD"
+    ],
+    "required_db_packages_structure": [
+      "PKG_AUTH (Login, Validation)",
+      "PKG_ADMIN (Manage Walkers, Certs)",
+      "PKG_PASEADOR (Manage Availability, Accept Requests)",
+      "PKG_CIUDADANO (Register Pets, Bookings)",
+      "PKG_ALERTA (Panic Button logic)"
+    ]
+  },
+  "initial_seed_data": {
+    "admin_user": {
+      "dni": "00000000",
+      "name": "ADMIN",
+      "role": "ADMINISTRADOR"
+    }
+  }
+}

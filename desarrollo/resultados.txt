@@ -1,0 +1,27 @@
+http://localhost:8085/api-red-patas/api/v1/auth/login
+  {
+      "dni": "00000000",
+      "clave": "admin"
+  }
+  resulta:
+
+{
+    "success": true,
+    "code": "SUCCESS",
+    "message": "Login exitoso",
+    "data": {
+        "accessToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDAwMDAwMCIsIm51bVVzdWFyaW8iOjEsIm51bVBlcnNvbmEiOjEsInJvbGVzIjoiUk9MRV9BRE1JTklTVFJBRE9SIiwibm9tYnJlQ29tcGxldG8iOiJBRE1JTiBBRE1JTiIsImlhdCI6MTc2ODQzMTM2NSwiZXhwIjoxNzY4NTE3NzY1fQ.qSSlkeuYmRSN9AdPBOCLOU-qHOLGRHAzt_10_O4cFnG0sDuwMEbcNmmBCSQnJvd_",
+        "refreshToken": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIwMDAwMDAwMCIsImlhdCI6MTc2ODQzMTM2NSwiZXhwIjoxNzY5MDM2MTY1fQ.mc0eQm6MDdMdAn_GY6tMBhc23ZovH-kJI-UvR60mHD6YlyX5_UmwHCdd9TtTT8KC",
+        "tokenType": "Bearer",
+        "expiresIn": 86400000,
+        "usuario": {
+            "numUsuario": 1,
+            "numPersona": 1,
+            "dni": "00000000",
+            "correo": "admin@sanisidro.gob.pe",
+            "nombreCompleto": "ADMIN ADMIN",
+            "rol": "ADMINISTRADOR"
+        }
+    },
+    "timestamp": "2026-01-14T17:56:05.4465222"
+}

@@ -1,0 +1,168 @@
+el enviar con estos datos:
+  {
+      "dni": "00000000",
+      "clave": "123456"
+  }
+  me resulta:
+{
+    "success": false,
+    "code": "INVALID_CREDENTIALS",
+    "message": "Credenciales inválidas",
+    "timestamp": "2026-01-14T17:45:17.354763"
+}
+
+  me sale este error:
+2026-01-14T17:45:16.056-05:00  INFO 50924 --- [apiRedDePatas] [nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-01-14T17:45:16.214-05:00 DEBUG 50924 --- [apiRedDePatas] [nio-8085-exec-1] p.g.m.a.s.s.CustomUserDetailsService     : Buscando usuario con DNI: 00000000
+2026-01-14T17:45:16.215-05:00 DEBUG 50924 --- [apiRedDePatas] [nio-8085-exec-1] o.s.jdbc.core.simple.SimpleJdbcCall      : Added declared parameter for [PRC_OBTENERUSUARIOPORLOGIN]: PvcCODDNI
+2026-01-14T17:45:16.215-05:00 DEBUG 50924 --- [apiRedDePatas] [nio-8085-exec-1] o.s.jdbc.core.simple.SimpleJdbcCall      : Added declared parameter for [PRC_OBTENERUSUARIOPORLOGIN]: PcrDATOS
+2026-01-14T17:45:16.215-05:00 DEBUG 50924 --- [apiRedDePatas] [nio-8085-exec-1] o.s.jdbc.core.simple.SimpleJdbcCall      : JdbcCall call not compiled before execution - invoking compile
+2026-01-14T17:45:16.219-05:00 DEBUG 50924 --- [apiRedDePatas] [nio-8085-exec-1] o.s.jdbc.datasource.DataSourceUtils      : Fetching JDBC Connection from DataSource
+2026-01-14T17:45:16.220-05:00  INFO 50924 --- [apiRedDePatas] [nio-8085-exec-1] com.zaxxer.hikari.HikariDataSource       : RedPatasPool - Starting...
+2026-01-14T17:45:17.288-05:00 ERROR 50924 --- [apiRedDePatas] [nio-8085-exec-1] p.g.m.a.s.s.CustomUserDetailsService     : Error al buscar usuario con DNI 00000000: Error retrieving database meta-data
+
+org.springframework.dao.DataAccessResourceFailureException: Error retrieving database meta-data
+	at org.springframework.jdbc.core.metadata.CallMetaDataProviderFactory.createMetaDataProvider(CallMetaDataProviderFactory.java:144) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.core.metadata.CallMetaDataContext.initializeMetaData(CallMetaDataContext.java:245) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.compileInternal(AbstractJdbcCall.java:328) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.compile(AbstractJdbcCall.java:307) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.checkCompiled(AbstractJdbcCall.java:368) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.doExecute(AbstractJdbcCall.java:383) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.core.simple.SimpleJdbcCall.execute(SimpleJdbcCall.java:200) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at pe.gob.msi.apiRedDePatas.security.service.CustomUserDetailsService.loadUserByUsername(CustomUserDetailsService.java:74) ~[classes/:na]
+	at org.springframework.security.authentication.dao.DaoAuthenticationProvider.retrieveUser(DaoAuthenticationProvider.java:104) ~[spring-security-core-7.0.2.jar:7.0.2]
+	at org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider.authenticate(AbstractUserDetailsAuthenticationProvider.java:143) ~[spring-security-core-7.0.2.jar:7.0.2]
+	at org.springframework.security.authentication.ProviderManager.authenticate(ProviderManager.java:183) ~[spring-security-core-7.0.2.jar:7.0.2]
+	at pe.gob.msi.apiRedDePatas.features.auth.service.AuthService.login(AuthService.java:45) ~[classes/:na]
+	at pe.gob.msi.apiRedDePatas.features.auth.api.AuthController.login(AuthController.java:32) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:190) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:934) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:853) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:86) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:903) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:649) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874) ~[spring-webmvc-7.0.2.jar:7.0.2]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710) ~[tomcat-embed-core-11.0.15.jar:6.1]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:371) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:132) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:86) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at pe.gob.msi.apiRedDePatas.security.jwt.JwtAuthFilter.doFilterInternal(JwtAuthFilter.java:64) ~[classes/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:380) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195) ~[spring-security-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317) ~[spring-security-config-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-7.0.2.jar:7.0.2]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57) ~[tomcat-embed-core-11.0.15.jar:11.0.15]
+	at java.base/java.lang.Thread.run(Thread.java:1474) ~[na:na]
+Caused by: org.springframework.jdbc.support.MetaDataAccessException: Could not get Connection for extracting meta-data
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:355) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.core.metadata.CallMetaDataProviderFactory.createMetaDataProvider(CallMetaDataProviderFactory.java:89) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	... 106 common frames omitted
+Caused by: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:84) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.support.JdbcUtils.extractDatabaseMetaData(JdbcUtils.java:329) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	... 107 common frames omitted
+Caused by: java.sql.SQLException: Listener refused the connection with the following error:
+ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:774) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:688) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:39) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:691) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:144) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:373) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:210) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:488) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:576) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:97) ~[HikariCP-7.0.2.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:111) ~[HikariCP-7.0.2.jar:na]
+	at org.springframework.jdbc.datasource.DataSourceUtils.fetchConnection(DataSourceUtils.java:160) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection(DataSourceUtils.java:118) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	at org.springframework.jdbc.datasource.DataSourceUtils.getConnection(DataSourceUtils.java:81) ~[spring-jdbc-7.0.2.jar:7.0.2]
+	... 108 common frames omitted
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12505, TNS:listener does not currently know of SID given in connect descriptor
+
+	at oracle.net.ns.NSProtocolNIO.negotiateConnection(NSProtocolNIO.java:271) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	at oracle.net.ns.NSProtocol.connect(NSProtocol.java:317) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.connect(T4CConnection.java:1438) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:518) ~[ojdbc8-12.2.0.1.jar:12.2.0.1.0]
+	... 121 common frames omitted
+
+2026-01-14T17:45:17.353-05:00  WARN 50924 --- [apiRedDePatas] [nio-8085-exec-1] p.g.m.a.s.e.GlobalExceptionHandler       : Credenciales inválidas
+2026-01-14T17:45:17.386-05:00  WARN 50924 --- [apiRedDePatas] [nio-8085-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
